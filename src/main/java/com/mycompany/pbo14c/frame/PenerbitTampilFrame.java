@@ -2,6 +2,7 @@ package com.mycompany.pbo14c.frame;
 
 import com.mycompany.pbo14c.db.Koneksi;
 import com.mycompany.pbo14c.model.Penerbit;
+import java.awt.event.WindowListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -159,6 +160,28 @@ public class PenerbitTampilFrame extends JFrame {
             }
             resetTable("");
         });
+        
+        bUbah.addActionListener((e) -> {
+            int i = tPenerbit.getSelectedRow();
+            if( i>=0 ){
+                TableModel model = tPenerbit.getModel();
+                penerbit = new Penerbit();
+                penerbit.setId(Integer.parseInt(model.getValueAt(i,0).toString()));
+                penerbit.setPenerbit(model.getValueAt(i,1).toString());
+                PenerbitTambahFrame f = new PenerbitTambahFrame(penerbit);
+            } else {
+                JOptionPane.showMessageDialog(null, "Pilih data");
+            }
+        });
+        
+        bTambah.addActionListener((e) -> {
+            PenerbitTambahFrame f = new PenerbitTambahFrame();
+        });
+        
+        addWindowListener(new java.awt.event.WindowAdapter(){
+           public void windowActivated(java.awt.event.WindowEvent evt){
+               resetTable("");
+           } 
+        });
     }
-    
 }
